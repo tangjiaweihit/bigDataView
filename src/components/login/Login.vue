@@ -1,10 +1,5 @@
 <script>
-// import QuitBtn from "@/components/common/QuitBtn.vue";
-
 export default {
-  // components: {
-  //   QuitBtn
-  // },
   data() {
     return {
       username: "",
@@ -12,29 +7,27 @@ export default {
       openBrowserTip: false
     };
   },
-  // created() {
-  //   if (process.env.NODE_ENV == "development") {
-  //     this.username = "13555555555";
-  //     this.password = "admin";
-  //   }
+  created() {
+    if (process.env.NODE_ENV == "development") {
+      this.username = "13555555555";
+      this.password = "admin";
+    }
 
-  //   let ieVersion = this.getIEVersion();
-  //   let chromeVersion = this.getChromeVersion();
-  //   if (this.isIEnotEdge() == true || chromeVersion != false) {
-  //     if (chromeVersion * 1 >= 54 || ieVersion == false) {
-  //       this.openBrowserTip = false;
-  //     } else {
-  //       this.openBrowserTip = true;
-  //     }
-  //   } else {
-  //     this.openBrowserTip = true;
-  //   }
-  // },
+    let ieVersion = this.getIEVersion();
+    let chromeVersion = this.getChromeVersion();
+    if (this.isIEnotEdge() == true || chromeVersion != false) {
+      if (chromeVersion * 1 >= 54 || ieVersion == false) {
+        this.openBrowserTip = false;
+      } else {
+        this.openBrowserTip = true;
+      }
+    } else {
+      this.openBrowserTip = true;
+    }
+  },
   methods: {
     async login() {
-      let token = await this.$http.login(this.username, this.password);
-
-      // let roles = await this.$http.get
+      let token = await this.$http.admin.login(this.username, this.password);
       if (token) {
         localStorage.setItem("token", token);
         localStorage.setItem("token", token);
@@ -43,30 +36,20 @@ export default {
       }
     },
     async getHomeAndGoOn() {
-      let user = await this.$http.getHome();
+      let user = await this.$http.admin.getHome();
       localStorage.setItem("name", user.name);
       localStorage.setItem("id", user.id);
       localStorage.setItem("avatar", user.profilePhoto);
-      let data = await this.$http.getSelf();
+      let data = await this.$http.admin.getSelf();
       if (data && data.roles) {
         localStorage.setItem("roles", data.roles);
       }
       let type = localStorage.getItem("type");
       if (this.openBrowserTip == false) {
-        if (type === "saveBtnClicked") {
-          this.$router.replace("/index/userinfo");
-        } else {
-          this.$router.replace("/firstscreendetect");
-        }
+        this.$router.replace("/index/homeRoute");
       } else {
         this.$router.replace("/browsertip");
       }
-      // if(type === "saveBtnClicked"){
-      //     this.$router.replace('/index/userinfo');
-      // }else{
-      //     this.$router.replace('/firstscreendetect');
-      // }
-      // this.$router.replace('/index/userinfo')
     },
     getChromeVersion() {
       let arr = navigator.userAgent.split(" ");
@@ -115,10 +98,9 @@ export default {
 
 <template>
   <div class="Login">
-    <!-- <QuitBtn></QuitBtn> -->
     <Login
-      for-player
       :newForgetPwd="true"
+      platformName="视感知觉视力挑战平台"
       :username.sync="username"
       :password.sync="password"
       @confirm="login"
