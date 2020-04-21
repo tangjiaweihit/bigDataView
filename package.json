@@ -18,7 +18,8 @@
     "js-cookie": "^2.2.0",
     "lodash": "^4.17.15",
     "moment": "^2.23.0",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "yotta-vue-components": "./yotta-vue-components"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

@@ -1,17 +1,5 @@
-
-
-
-
-
 <script>
-import TheHeader from "@/components/index/TheHeader.vue";
-import LoadingView from "../gameList/LoadingView.vue";
-
 export default {
-  components: {
-    TheHeader,
-    LoadingView
-  },
   data() {
     return {
       value: "",
@@ -23,99 +11,24 @@ export default {
   },
   mounted() {
     this.$el.lastElementChild.src = `${this.$resourceUrl}/shuangyanshijuepinghengdian/`;
-    // window.addEventListener("message",this.getMessage);
   },
   methods: {
-    // getMessage(e){
-    //     if (this.isJsonString(e.data)){
-    //         let data = e.data;
-    //         data = JSON.parse(data);
-    //         this.eData = data;
-    //         if (data.type === "saveBtnClicked"){
-    //             localStorage.setItem('type', data.type);
-    //             localStorage.setItem('data', JSON.stringify(data.data));
-    //             this.$router.replace('/index/userinfo');
-    //         } else if (data.type === "isStart"){
-    //             this.isStart = true;
-    //         } else if ( data.type === "isScreen" ){
-    //             this.isScreen = true;
-    //         } else if ( data.type === "getPixelInfo"){
-    //             let messData = JSON.parse(localStorage.getItem('data'));
-    //             document.querySelector(".ScreenIframe").contentWindow.focus();
-    //             let jsonData = JSON.stringify({ type: "getPixelInfo", data: messData });
-    //             window.frames[0].postMessage(jsonData,"*");
-    //             this.finished = true;
-    //         }
-    //     }
-    // },
-    // isJsonString(str) {
-    //     try {
-    //         if (typeof JSON.parse(str) == "object") {
-    //             return true;
-    //         }
-    //     } catch(e) {
-    //         }
-    //     return false;
-    // },
-    // confirmJump(){
-    //     // this.$router.replace('/index/userinfo');
-    //     if ( this.eData.type === "isStart" ) {
-    //         this.isStart = false;
-    //         document.querySelector(".ScreenIframe").contentWindow.focus();
-    //         if( this.value ) {
-    //             let jsonData = JSON.stringify({ type: "isStart", data: this.value });
-    //             window.frames[0].postMessage(jsonData,"*");
-    //         } else {
-    //             let jsonData = JSON.stringify({ type: "isStart", data: '4.0' });
-    //             window.frames[0].postMessage(jsonData,"*");
-    //         }
-    //     }
-    // },
-    // goScreenTest() {
-    //     this.isScreen = false;
-    //     this.$router.push('screendetect')
-    // }
+    goBack() {
+      this.$router.replace("/index/homeRoute");
+    }
   }
 };
 </script>
 <template>
-  <div
-    class="TrainIframe"
-    element-loading-background="rgba(0, 0, 0, 0.3)"
-  >
-    <!-- <div class="container" >
-            <Dialog class="TrainIframeDialog" v-if="isStart" simple @close="isStart=false" @confirm="confirmJump">
-                <div class="text">
-                    <p class="textTitle">初始测试值（五分记录）</p>
-                    <el-select class="selectBox" v-model="value" placeholder="请选择">
-                        <el-option
-                        v-for="item in options"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
-                        </el-option>
-                    </el-select>
-                </div>
-            </Dialog>
-            <Dialog class="TrainIframeDialog" v-if="isScreen" simple @close="goScreenTest" @confirm="goScreenTest">
-                <div class="text">
-                    <p class="textTitle">请前往屏幕检测</p>
-                </div>
-    </Dialog>-->
+  <div class="TrainIframe" element-loading-background="rgba(0, 0, 0, 0.3)">
+    <div style="margin-left: 10px">
+      <el-button type="text" @click="goBack" icon="el-icon-arrow-left">返回</el-button>
+    </div>
     <iframe class="ScreenIframe" frameborder="no"></iframe>
-    <!-- <LoadingView class="LoadingView" :finished="finished" />
-    </div>-->
   </div>
 </template>
 
 <style lang="scss">
-.TrainIframeDialog h1 {
-  display: none;
-}
-.container .LoadingView {
-  width: 100%;
-  height: 100%;
-}
 .TrainIframe .container {
   .el-select .el-input.is-focus .el-input__inner {
     border-color: #00c1de;

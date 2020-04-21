@@ -1,22 +1,18 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-// import VisionUI from 'yotta-vue-components/vision-ui-plugin.js'
+import VisionUI from 'yotta-vue-components/vision-ui-plugin.js'
 import http from '@/http/index.js'
 import ElementUI from 'element-ui'
 import '@/css/element-variables.scss'
-// import 'element-ui/lib/theme-chalk/index.css'
 import store from '@/store/index.js'
 import moment from '@/mixin/moment.js'
 import filtersNum from '@/filters/filtersNum.js'
 import cookie from 'js-cookie'
-
 Vue.prototype.$cookie = cookie
 Vue.use(filtersNum);
 Vue.use(ElementUI)
-// Vue.use(VisionUI)
+Vue.use(VisionUI)
 Vue.prototype.$http = http
 Vue.mixin(moment)
 Vue.config.productionTip = false
