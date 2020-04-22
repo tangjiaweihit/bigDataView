@@ -6,8 +6,10 @@ export default {
     CardCell
   },
   data() {
+    let messData = JSON.parse(localStorage.getItem("data"));
+    console.log('-aaa', messData)
     return {
-      msg: "Welcome to Your Vue.js App"
+      resolutionResult: messData && messData.DPI ? `DPI: ${messData.DPI}` : '--',
     };
   }
 };
@@ -21,7 +23,7 @@ export default {
       <span class="line" />
     </div>
     <div class="contentView">
-      <CardCell iconImg="resolution" title="分辨率校准" route="resolution" />
+      <CardCell iconImg="resolution" title="分辨率校准" route="resolution" :lastedResult="resolutionResult" />
     </div>
     <div class="titleView">
       <span class="line" />
@@ -29,8 +31,8 @@ export default {
       <span class="line" />
     </div>
     <div class="contentView">
-      <CardCell iconImg="vision" title="视力" route="vision"/>
-      <CardCell iconImg="balance" title="双眼视觉平衡点" route="balance"/>
+      <CardCell iconImg="vision" title="视力" route="vision" />
+      <CardCell iconImg="balance" title="双眼视觉平衡点" route="balance" />
     </div>
   </div>
 </template>
@@ -66,8 +68,7 @@ export default {
     text-align: center;
     margin: 15px;
     display: flex;
-    justify-content: center
-    ;
+    justify-content: center;
   }
 }
 </style>

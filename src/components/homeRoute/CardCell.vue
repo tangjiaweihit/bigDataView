@@ -12,7 +12,8 @@ export default {
   props: {
     iconImg: String,
     route: String,
-    title: String
+    title: String,
+    lastedResult: String,
   },
   data() {
     const icon = mapIcon[this.iconImg];
@@ -37,7 +38,7 @@ export default {
   <div class="cardCell">
     <img class="iconImg" :src="item.icon" />
     <div class="cellTitle">{{item.title}}</div>
-    <div class="cellResult">前次测试结果：{{item.title}}</div>
+    <div class="cellResult">前次测试结果：{{lastedResult}}</div>
     <el-button @click="onClick" class="cellStartButton">开始校准</el-button>
   </div>
 </template>

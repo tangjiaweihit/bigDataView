@@ -88,23 +88,10 @@ export default {
       handleError(error)
     }
   },
-  getPatientImageList: async () => {
-    startLoading();
+  saveTestResult: async (data) => {
+    startLoading()
     try {
-      const result = await axios.get(`/user/profile/photo`, {
-        headers: authHeader()
-      })
-      endLoading()
-      return result.data
-    } catch (error) {
-      endLoading()
-      handleError(error)
-    }
-  },
-  updatePatientHeaderImage: async (userId, data) => {
-    startLoading();
-    try {
-      const result = await axios.post(`/user/${userId}`, data, {
+      let result = await axios.post('user/vision/challenge', data, {
         headers: authHeader()
       })
       endLoading()
@@ -113,5 +100,5 @@ export default {
       endLoading()
       handleError(error)
     }
-  }
+  },
 }

@@ -76,7 +76,12 @@ export default {
       isStart: false,
       finished: false,
       eData: "",
-      isScreen: false
+      isScreen: false,
+      isStartLeft: false,
+      isStartRight: false,
+      leftValue: undefined,
+      rightValue: undefined,
+      testFinished: false
     };
   },
   mounted() {
@@ -89,12 +94,13 @@ export default {
         let data = e.data;
         data = JSON.parse(data);
         this.eData = data;
+        console.log("data", data);
         if (data.type === "saveBtnClicked") {
           localStorage.setItem("type", data.type);
           localStorage.setItem("data", JSON.stringify(data.data));
           this.$router.replace("/index/homeRoute");
         } else if (data.type === "isStart") {
-          this.isStart = true;
+          this.isStartRight = true;
         } else if (data.type === "isScreen") {
           this.isScreen = true;
         } else if (data.type === "getPixelInfo") {
@@ -106,6 +112,18 @@ export default {
           });
           window.frames[0].postMessage(jsonData, "*");
           this.finished = true;
+        } else if (data.type === "sendResult") {
+          this.isScreen = true;
+          if (data.type === "right" && data.data) {
+            this.rightValue = data.data;
+            this.isStartLeft = true;
+          } else if (data.type === "left" && data.data) {
+            this.leftValue = data.data;
+            this.saveFinshedResult();
+            this.testFinished = true;
+          } else {
+            this.$message.warning("测试失败，请退出重试！");
+          }
         }
       }
     },
@@ -117,25 +135,50 @@ export default {
       } catch (e) {}
       return false;
     },
-    confirmJump() {
+    confirmJump(type) {
       if (this.eData.type === "isStart") {
-        this.isStart = false;
+        // this.isStart = false;
+        if (type === "left") {
+          this.isStartRight = false;
+        } else if (type === "right") {
+          this.isStartLeft = false;
+        }
         document.querySelector(".ScreenIframe").contentWindow.focus();
         if (this.value) {
-          let jsonData = JSON.stringify({ type: "isStart", data: this.value });
+          let jsonData = JSON.stringify({
+            type: "isStart",
+            data: this.value,
+            eyeType: type
+          });
           window.frames[0].postMessage(jsonData, "*");
         } else {
-          let jsonData = JSON.stringify({ type: "isStart", data: "4.0" });
+          let jsonData = JSON.stringify({
+            type: "isStart",
+            data: "4.0",
+            eyeType: type
+          });
           window.frames[0].postMessage(jsonData, "*");
         }
       }
     },
     goScreenTest() {
       this.isScreen = false;
-      this.$router.push("screendetect");
+      this.$router.push("vision");
     },
     goBack() {
       this.$router.replace("/index/homeRoute");
+    },
+    onClickTestResult() {
+      this.testFinished = false;
+      this.$router.replace("/index/homeRoute");
+    },
+    async saveFinshedResult() {
+      const data = {
+        leftEyeVision: this.leftValue,
+        rightEyeVision: this.rightValue,
+        type: "VISION_CHALLENGE)"
+      };
+      const result = this.$http.admin.saveTestResult(data);
     }
   }
 };
@@ -149,13 +192,34 @@ export default {
     <div class="container">
       <Dialog
         class="TrainIframeDialog"
-        v-if="isStart"
+        v-if="isStartRight"
         simple
-        @close="isStart=false"
-        @confirm="confirmJump"
+        @close="isStartRight=false"
+        @confirm="confirmJump('right')"
       >
         <div class="text">
-          <p class="textTitle">初始测试值（五分记录）</p>
+          <img class="iconImg" src="@/assets/coverLeft.png" />
+          <p class="textTitle">右眼初始测试值（五分记录）</p>
+          <el-select class="selectBox" v-model="value" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </div>
+      </Dialog>
+      <Dialog
+        class="TrainIframeDialog"
+        v-if="isStartLeft"
+        simple
+        @close="isStartLeft=false"
+        @confirm="confirmJump('left')"
+      >
+        <div class="text">
+          <img class="iconImg" src="@/assets/coverRight.png" />
+          <p class="textTitle">左眼初始测试值（五分记录）</p>
           <el-select class="selectBox" v-model="value" placeholder="请选择">
             <el-option
               v-for="item in options"
@@ -177,9 +241,22 @@ export default {
           <p class="textTitle">请前往屏幕检测</p>
         </div>
       </Dialog>
-      <div style="margin-left: 10px">
+      <Dialog
+        class="TrainIframeDialog"
+        v-if="testFinished"
+        simple
+        @close="testFinished=false"
+        @confirm="onClickTestResult"
+      >
+        <div class="text">
+          <el-alert title="恭喜你，完成测试！" type="succcess" :closable="false" center class="WarningText"></el-alert>
+          <p class="textTitle">左眼测试值：{{rightValue}}</p>
+          <p class="textTitle">左眼测试值：{{leftValue}}</p>
+        </div>
+      </Dialog>
+      <!-- <div style="margin-left: 10px">
         <el-button type="text" @click="goBack" icon="el-icon-arrow-left">返回</el-button>
-      </div>
+      </div>-->
       <iframe class="ScreenIframe" frameborder="no"></iframe>
     </div>
   </div>
@@ -220,6 +297,10 @@ export default {
   border-radius: 5px;
   overflow: auto;
 }
+.iconImg {
+  width: 200px;
+  margin-bottom: 15px;
+}
 .ScreenIframe {
   width: 100%;
   height: 99%;
@@ -231,6 +312,7 @@ export default {
   color: #343434;
   font-size: 18px;
   .selectBox {
+    width: 230px;
     margin-top: 20px;
   }
 }
