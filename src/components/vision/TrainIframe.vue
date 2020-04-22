@@ -113,12 +113,11 @@ export default {
           window.frames[0].postMessage(jsonData, "*");
           this.finished = true;
         } else if (data.type === "sendResult") {
-        //   this.isScreen = true;
-          if (data.type === "right" && data.data) {
-            this.rightValue = data.data;
+          if (data.data.type === "right" && data.data.result) {
+            this.rightValue = data.data.result;
             this.isStartLeft = true;
-          } else if (data.type === "left" && data.data) {
-            this.leftValue = data.data;
+          } else if (data.data.type === "left" && data.data.result) {
+            this.leftValue = data.data.result;
             this.saveFinshedResult();
             this.testFinished = true;
           } else {
@@ -136,8 +135,7 @@ export default {
       return false;
     },
     confirmJump(type) {
-      if (this.eData.type === "isStart") {
-        // this.isStart = false;
+      if (this.eData.type === "isStart" && this.eData.type === "sendResult" ) {
         if (type === "left") {
           this.isStartLeft = false;
         } else if (type === "right") {
