@@ -113,7 +113,7 @@ export default {
           window.frames[0].postMessage(jsonData, "*");
           this.finished = true;
         } else if (data.type === "sendResult") {
-          this.isScreen = true;
+        //   this.isScreen = true;
           if (data.type === "right" && data.data) {
             this.rightValue = data.data;
             this.isStartLeft = true;
