@@ -139,9 +139,9 @@ export default {
       if (this.eData.type === "isStart") {
         // this.isStart = false;
         if (type === "left") {
-          this.isStartRight = false;
-        } else if (type === "right") {
           this.isStartLeft = false;
+        } else if (type === "right") {
+          this.isStartRight = false;
         }
         document.querySelector(".ScreenIframe").contentWindow.focus();
         if (this.value) {
