@@ -135,7 +135,7 @@ export default {
       return false;
     },
     confirmJump(type) {
-      if (this.eData.type === "isStart" && this.eData.type === "sendResult" ) {
+      if (this.eData.type === "isStart" || this.eData.type === "sendResult") {
         if (type === "left") {
           this.isStartLeft = false;
         } else if (type === "right") {
@@ -144,14 +144,14 @@ export default {
         document.querySelector(".ScreenIframe").contentWindow.focus();
         if (this.value) {
           let jsonData = JSON.stringify({
-            type: "isStart",
+            type: this.eData.type,
             data: this.value,
             eyeType: type
           });
           window.frames[0].postMessage(jsonData, "*");
         } else {
           let jsonData = JSON.stringify({
-            type: "isStart",
+            type: this.eData.type,
             data: "4.0",
             eyeType: type
           });
@@ -174,7 +174,7 @@ export default {
       const data = {
         leftEyeVision: this.leftValue,
         rightEyeVision: this.rightValue,
-        type: "VISION_CHALLENGE)"
+        type: "VISION_CHALLENGE "
       };
       const result = this.$http.admin.saveTestResult(data);
     }
