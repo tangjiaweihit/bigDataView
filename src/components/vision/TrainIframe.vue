@@ -174,7 +174,7 @@ export default {
       const data = {
         leftEyeVision: this.leftValue,
         rightEyeVision: this.rightValue,
-        type: "VISION_CHALLENGE "
+        type: "VISION_CHALLENGE"
       };
       const result = this.$http.admin.saveTestResult(data);
     }
