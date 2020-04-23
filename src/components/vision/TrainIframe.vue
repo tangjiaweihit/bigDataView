@@ -243,7 +243,7 @@ export default {
         class="TrainIframeDialog"
         v-if="testFinished"
         simple
-        @close="testFinished=false"
+        @close="onClickTestResult"
         @confirm="onClickTestResult"
       >
         <div class="text">
