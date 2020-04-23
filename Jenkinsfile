@@ -19,7 +19,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing ...'
-                sh 'sonar-scanner'
+                // sh 'sonar-scanner'
             }
         }
         stage('Package') {
