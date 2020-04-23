@@ -69,10 +69,9 @@ export default {
         iconImg="vision"
         :buttonArray="visionButton"
         title="视力"
-        route="vision"
         :lastedResult="visionResult"
       />
-      <CardCell iconImg="balance" :buttonArray="balanceButton" title="双眼视觉平衡点" route="balance" />
+      <CardCell iconImg="balance" :buttonArray="balanceButton" title="双眼视觉平衡点" />
     </div>
   </div>
 </template>
