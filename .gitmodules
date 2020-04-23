@@ -1,0 +1,3 @@
+[submodule "yotta-vue-components"]
+	path = yotta-vue-components
+	url = git@github.com:AwesomeYotta/yotta-vue-components.git
