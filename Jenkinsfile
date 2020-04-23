@@ -28,16 +28,16 @@ pipeline {
             }
             steps {
                 echo 'Package to ' + DEPLOY_GROUP_TEST
-                  // sh 'scp -r devops/nginx.conf vision@' + DEPLOY_GROUP_TEST + ':/opt/vision-challenge/nginx.conf'
+                sh 'scp -r devops/nginx.conf vision@' + DEPLOY_GROUP_TEST + ':/opt/vision-challenge/nginx.conf'
                 // sh 'mkdir -p /opt/vision-challenge/html/'
-                  // sh 'scp -r dist/* vision@' + DEPLOY_GROUP_TEST + ':/opt/vision-challenge/html/'
+                sh 'scp -r dist/* vision@' + DEPLOY_GROUP_TEST + ':/opt/vision-challenge/html/'
                 // sh 'sudo systemctl reload nginx.service'
-                  // sh 'ssh vision@' + DEPLOY_GROUP_TEST + ' "sudo systemctl reload nginx.service"'
+                sh 'ssh vision@' + DEPLOY_GROUP_TEST + ' "sudo systemctl reload nginx.service"'
             }
         }
         stage('Deploy') {
             when {
-                branch 'master'
+                branch 'deploy'
             }
             steps {
                 echo 'Deploying to ' + DEPLOY_GROUP_1
