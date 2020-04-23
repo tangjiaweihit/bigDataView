@@ -7,10 +7,39 @@ export default {
   },
   data() {
     let messData = JSON.parse(localStorage.getItem("data"));
-    console.log('-aaa', messData)
+    console.log("-aaa", messData);
     return {
-      resolutionResult: messData && messData.DPI ? `DPI: ${messData.DPI}` : '--',
+      messData,
+      resolutionResult:
+        messData && messData.DPI ? `DPI: ${messData.DPI}` : "--",
+      visionResult: "",
+      visionButton: [
+        {
+          name: "开始检测",
+          route: "vision"
+        }
+      ],
+      balanceButton: [
+        {
+          name: "开始检测",
+          route: "balance"
+        }
+      ]
     };
+  },
+  created() {
+    this.loadData();
+  },
+  methods: {
+    async loadData() {
+      const result = await this.$http.admin.getAllLastedTestResult();
+      if (result && result.data) {
+        if (result.data.leftEyeVision || result.data.rightEyeVision) {
+          this.visionResult = `右眼：${result.data.rightEyeVision ||
+            "--"}  左眼：${result.data.leftEyeVision || "--"}`;
+        }
+      }
+    }
   }
 };
 </script>
@@ -23,7 +52,12 @@ export default {
       <span class="line" />
     </div>
     <div class="contentView">
-      <CardCell iconImg="resolution" title="分辨率校准" route="resolution" :lastedResult="resolutionResult" />
+      <CardCell
+        iconImg="resolution"
+        title="分辨率校准"
+        route="resolution"
+        :lastedResult="resolutionResult"
+      />
     </div>
     <div class="titleView">
       <span class="line" />
@@ -31,8 +65,14 @@ export default {
       <span class="line" />
     </div>
     <div class="contentView">
-      <CardCell iconImg="vision" title="视力" route="vision" />
-      <CardCell iconImg="balance" title="双眼视觉平衡点" route="balance" />
+      <CardCell
+        iconImg="vision"
+        :buttonArray="visionButton"
+        title="视力"
+        route="vision"
+        :lastedResult="visionResult"
+      />
+      <CardCell iconImg="balance" :buttonArray="balanceButton" title="双眼视觉平衡点" route="balance" />
     </div>
   </div>
 </template>

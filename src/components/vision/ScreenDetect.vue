@@ -83,9 +83,9 @@ export default {
           <p>屏幕校准能够保证在不同分辨率下显示同等大小的图像，确定跳过吗？</p>
         </div>
       </Dialog>
-      <div style="margin-left: 10px">
+      <!-- <div style="margin-left: 10px">
         <el-button type="text" @click="goBack" icon="el-icon-arrow-left">返回</el-button>
-      </div>
+      </div> -->
       <iframe class="ScreenIframe" frameborder="no"></iframe>
     </div>
   </div>

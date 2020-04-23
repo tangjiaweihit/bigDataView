@@ -101,4 +101,17 @@ export default {
       handleError(error)
     }
   },
+  getAllLastedTestResult: async () => {
+    startLoading()
+    try {
+      let result = await axios.get('user/vision/challenge/recently', {
+        headers: authHeader()
+      })
+      endLoading()
+      return result
+    } catch (error) {
+      endLoading()
+      handleError(error)
+    }
+  },
 }
