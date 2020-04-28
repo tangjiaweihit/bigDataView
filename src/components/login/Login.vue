@@ -100,7 +100,7 @@ export default {
   <div class="Login">
     <Login
       :newForgetPwd="true"
-      platformName="视感知觉视力挑战平台"
+      platformName="视力挑战平台"
       :username.sync="username"
       :password.sync="password"
       @confirm="login"

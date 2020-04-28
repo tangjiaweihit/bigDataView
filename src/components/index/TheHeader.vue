@@ -41,7 +41,7 @@ export default {
   <div class="TheHeader">
     <img class="header_logo" src="@/assets/header_logo.svg" />
     <span class="line" />
-    <p class="title">视感知觉视力挑战平台</p>
+    <p class="title">视力挑战平台</p>
     <img class="headImage" :src="`${trainUrl}/profilephoto/${avatar}`" />
     <p v-if="!ROLE_COMPLIANCE && name" class="hi">
       <span>{{hi}}</span>

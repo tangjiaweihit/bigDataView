@@ -55,7 +55,7 @@ export default {
     <div class="TheHeader">
       <img src="@/assets/header_logo.svg" />
       <span class="line" />
-      <span class="TheHeaderTitle">视感知觉训练软件</span>
+      <span class="TheHeaderTitle">视力挑战平台</span>
     </div>
     <div class="mainBody">
       <RetrievePassword
