@@ -1,36 +1,26 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import VisionUI from 'yotta-vue-components/vision-ui-plugin.js'
 import http from '@/http/index.js'
 import ElementUI from 'element-ui'
-import '@/css/element-variables.scss'
+import 'element-ui/lib/theme-chalk/index.css'
 import store from '@/store/index.js'
 import moment from '@/mixin/moment.js'
-import filtersNum from '@/filters/filtersNum.js'
 import cookie from 'js-cookie'
+import ECharts from 'vue-echarts' // 在 webpack 环境下指向 components/ECharts.vue
+import echarts from "echarts";
+import macarons from '@/common/theme.json'
+
+console.log('macarons-->>>', macarons)
+echarts.registerTheme('myMacarons', macarons);
 Vue.prototype.$cookie = cookie
-Vue.use(filtersNum);
 Vue.use(ElementUI)
-Vue.use(VisionUI)
 Vue.prototype.$http = http
 Vue.mixin(moment)
 Vue.config.productionTip = false
-Vue.prototype.$resourceUrl = 'http://vision-resource.yottasystem.com'
-Vue.prototype.$resourceLegacyUrl = 'http://vision-resource-legacy.yottasystem.com'
-Vue.prototype.$trainUrl = 'http://vision-train.yottasystem.com'
+Vue.prototype.$echarts = echarts
 
-if (window.location.host.indexOf('mumuqing.net') > -1) {
-  console.log('is mumuqing')
-  Vue.prototype.$resourceUrl = 'https://vision-resource.mumuqing.net'
-  Vue.prototype.$resourceLegacyUrl = 'https://vision-resource-legacy.mumuqing.net'
-  Vue.prototype.$trainUrl = 'https://vision-train.mumuqing.net'
-}
-
-// import VueElectron from 'vue-electron'
-// Vue.use(VueElectron)
-
-/* eslint-disable no-new */
+Vue.component('v-chart', ECharts)
 var vue = new Vue({
   el: '#app',
   router,
