@@ -1,6 +1,6 @@
-# vision-challenge
+# bigDataView
 
-> vision-challenge
+> bigDataView
 
 ## Build Setup
 

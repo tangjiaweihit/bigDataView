@@ -2,7 +2,7 @@
 import TheHeader from "@/components/index/TheHeader.vue";
 import province from "@/components/homeRoute/province.vue";
 import Test2 from "@/components/homeRoute/test2.vue";
-
+import moment from 'moment'
 export default {
   components: {
     TheHeader,
@@ -13,7 +13,7 @@ export default {
   data() {
     return {
       activeName: "second",
-      deafultDate: "2020-05-19",
+      deafultDate: moment().format('YYYY-MM-DD'),
       first: true,
       second: true
     };

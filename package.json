@@ -1,7 +1,7 @@
 {
-  "name": "vision-challenge",
+  "name": "bigDataView",
   "version": "1.0.0",
-  "description": "vision-challenge",
+  "description": "bigDataView",
   "author": "tangjiaweihit <tangjiaweihit@sina.cn>",
   "private": true,
   "scripts": {
@@ -60,8 +60,8 @@
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",
-    "webpack-bundle-analyzer": "^3.8.0",
-    "webpack-dev-server": "^2.9.1",
+"webpack-bundle-analyzer": "^3.3.2",
+    "webpack-dev-server": "^3.11.1",
     "webpack-merge": "^4.1.0"
   },
   "engines": {
